@@ -1,0 +1,32 @@
+/* Previous SignupForm.css content remains the same */
+.bank-back-button {
+  display: flex;
+  align-items: center;
+  color: #2a52be;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.bank-arrow {
+  margin-right: 5px;
+  font-size: 18px;
+}
+
+.progress-indicator {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.progress-step {
+  padding: 5px 10px;
+  background-color: #e0e0e0;
+  color: #666;
+  border-radius: 20px;
+  font-size: 14px;
+}
+
+.progress-step.active {
+  background-color: #2a52be;
+  color: white;
+}
