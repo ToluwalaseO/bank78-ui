@@ -1,38 +1,71 @@
-import React, { useState } from 'react';
-import './App.css';
-import AccountType from './AccountType';
-import SignupForm from './SignupForm';
+import React, { useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import "./App.css";
+import AccountType from "./AccountType";
+import Basicdetails from "./Basicdetails";
+import Verification from "./Verification";
 
 function App() {
-  const [step, setStep] = useState(1);
-  const [accountType, setAccountType] = useState('');
+  const [accountType, setAccountType] = useState("");
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    referral: "",
+    agree: false,
+  });
 
-  const handleAccountSelect = (type) => {
-    setAccountType(type);
-    setStep(2);
+  // Handler for form field changes
+  const handleInputChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: type === "checkbox" ? checked : value,
+    }));
   };
 
-  const handleFormSubmit = (data) => {
-    console.log('Form submitted:', data);
-    // You can navigate to a success page or next step here
-    alert(`Account created successfully! Type: ${data.accountType}, Email: ${data.email}`);
-  };
-
-  const handleBack = () => {
-    setStep(1);
+  const handleVerificationComplete = (verificationData) => {
+    console.log("Complete user data:", {
+      ...formData,
+      ...verificationData,
+    });
+    // Handle completion logic here
   };
 
   return (
-    <div className="app-container">
-      {step === 1 && <AccountType selected={accountType} onSelect={handleAccountSelect} />}
-      {step === 2 && (
-        <SignupForm 
-          accountType={accountType} 
-          onSubmit={handleFormSubmit}
-          onBack={handleBack}
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <AccountType
+              selected={accountType}
+              onSelect={(type) => setAccountType(type)}
+            />
+          }
         />
-      )}
-    </div>
+        <Route
+          path="/basic-details"
+          element={
+            <Basicdetails
+              accountType={accountType}
+              formData={formData}
+              onChange={handleInputChange}
+              isChecked={formData.agree}
+            />
+          }
+        />
+        <Route
+          path="/verification"
+          element={
+            <Verification
+              userData={formData}
+              onComplete={handleVerificationComplete}
+            />
+          }
+        />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
