@@ -4,6 +4,7 @@ import "./App.css";
 import AccountType from "./AccountType";
 import Basicdetails from "./Basicdetails";
 import Verification from "./Verification";
+import Dashboard from "./Dashboard";
 
 function App() {
   const [accountType, setAccountType] = useState("");
@@ -15,7 +16,6 @@ function App() {
     agree: false,
   });
 
-  // Handler for form field changes
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData((prev) => ({
@@ -29,7 +29,7 @@ function App() {
       ...formData,
       ...verificationData,
     });
-    // Handle completion logic here
+    // 🚀 After completion, you can redirect user to /dashboard
   };
 
   return (
@@ -64,6 +64,7 @@ function App() {
             />
           }
         />
+        <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
     </BrowserRouter>
   );
