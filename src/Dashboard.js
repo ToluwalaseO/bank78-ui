@@ -1,12 +1,18 @@
-import React from "react";
+import "./App.css";
 import { Bar } from "react-chartjs-2";
 import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-} from "chart.js";
-import "./App.css";
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    Title,
+    Tooltip,
+    Legend,
+  } from "chart.js";
+  
+  ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+  
+
 
 ChartJS.register(CategoryScale, LinearScale, BarElement);
 
@@ -23,22 +29,25 @@ const Dashboard = () => {
     datasets: [
       {
         label: "Inflows",
-        backgroundColor: "#00ff88",
         data: [100, 300, 200, 400, 0, 0, 0],
+        backgroundColor: "#00ff88",
+        borderRadius: 5,
       },
     ],
   };
-
+  
   const outflowData = {
     labels: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
     datasets: [
       {
         label: "Outflows",
-        backgroundColor: "#ff5555",
         data: [200, 100, 300, 150, 0, 0, 0],
+        backgroundColor: "#ff5555",
+        borderRadius: 5,
       },
     ],
   };
+  
 
   const transactions = [
     {
@@ -83,13 +92,20 @@ const Dashboard = () => {
       <div className="charts">
         <div className="chart">
           <h3>Inflows</h3>
-          <Bar data={inflowData} />
+          {/* <Bar data={inflowData} /> */}
+          <p>Chart Placeholder</p>
+          {/* <Bar data={inflowData} options={{ responsive: true, plugins: { legend: { position: "top" } } }} /> */}
         </div>
         <div className="chart">
           <h3>Outflows</h3>
-          <Bar data={outflowData} />
+          {/* <Bar data={outflowData} /> */}
+          <p>Chart Placeholder</p>
+          {/* <Bar data={outflowData} options={{ responsive: true, plugins: { legend: { position: "top" } } }} /> */}
         </div>
       </div>
+
+
+
 
       <div className="transactions">
         <h3>Recent Transactions</h3>

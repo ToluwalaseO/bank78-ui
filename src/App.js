@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import "./App.css";
 import AccountType from "./AccountType";
 import Basicdetails from "./Basicdetails";
 import Verification from "./Verification";
-import Dashboard from "./Dashboard";
+import Dashboard from "./dashboard";
 
-function App() {
+
+const App = () => {
   const [accountType, setAccountType] = useState("");
   const [formData, setFormData] = useState({
     firstName: "",
@@ -15,6 +16,7 @@ function App() {
     referral: "",
     agree: false,
   });
+  const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -29,45 +31,49 @@ function App() {
       ...formData,
       ...verificationData,
     });
-    // 🚀 After completion, you can redirect user to /dashboard
+    navigate("/Dashboard");
   };
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <AccountType
-              selected={accountType}
-              onSelect={(type) => setAccountType(type)}
-            />
-          }
-        />
-        <Route
-          path="/basic-details"
-          element={
-            <Basicdetails
-              accountType={accountType}
-              formData={formData}
-              onChange={handleInputChange}
-              isChecked={formData.agree}
-            />
-          }
-        />
-        <Route
-          path="/verification"
-          element={
-            <Verification
-              userData={formData}
-              onComplete={handleVerificationComplete}
-            />
-          }
-        />
-        <Route path="/dashboard" element={<Dashboard />} />
-      </Routes>
-    </BrowserRouter>
+    <Routes>
+      <Route
+        path="/"
+        element={
+          <AccountType
+            selected={accountType}
+            onSelect={(type) => setAccountType(type)}
+          />
+        }
+      />
+      <Route
+        path="/basic-details"
+        element={
+          <Basicdetails
+            accountType={accountType}
+            formData={formData}
+            onChange={handleInputChange}
+            isChecked={formData.agree}
+          />
+        }
+      />
+      <Route
+        path="/verification"
+        element={
+          <Verification
+            userData={formData}
+            onComplete={handleVerificationComplete}
+          />
+        }
+      />
+      <Route path="/Dashboard" element={<Dashboard />} />
+    </Routes>
   );
-}
+};
 
-export default App;
+const AppWrapper = () => (
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>
+);
+
+export default AppWrapper;
